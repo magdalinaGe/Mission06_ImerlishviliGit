@@ -3,4 +3,7 @@
 *@
 @{
 }
-<h1>Application Submitted</h1>
+@model Application
+
+<h1>Application Submitted for @Model.Title</h1><br />
+<a asp-controller="Home" asp-action="MovieList"><h2>See Your Movie Database</h2></a>
