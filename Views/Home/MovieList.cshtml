@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<script src="/js/site.js"></script>
+
+
+@model List<Application>
+
+
+    
+              
+
+               <table class="content-table">
+                   <thread>
+                       <td>ID</td>
+                       <td>Category</td>
+                       <td>Title</td>
+                       <td>Year</td>
+                       <td>Director</td>
+                       <td>Rating</td>
+                       <td>Edited</td>
+                       <td>Lent to</td>
+                       <td>CopiedToPlex</td>
+                       <td>Notes</td>
+
+                   </thread>
+                   @foreach(var x in Model)
+    {
+                   <tbody>
+                       <tr>
+                           <td>@x.ApplicationId</td>
+                           <td>@x.Category</td>
+                           <td>@x.Title</td>
+                           <td>@x.Year</td>
+                           <td>@x.Director</td>
+                           <td>@x.Rating</td>
+                           <td>@x.Edited</td>
+                           <td>@x.Lent</td>
+                           <td>@x.Plex</td>
+                           <td>@x.Note</td>
+                           <td></td>
+
+                           <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.ApplicationId">Edit</a></td>
+                           <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.ApplicationId">Delete</a></td>
+                       </tr>
+                   </tbody>
+    }
+               </table>

@@ -5,7 +5,7 @@ namespace Mission06_Imerlishvili.Models
     {
         [Key]
         [Required]
-        public int ApplicationID { get; set; }
+        public int ApplicationId { get; set; }
 
         [Required(ErrorMessage = "Category is required.")]
         public string Category { get; set; }
@@ -14,6 +14,7 @@ namespace Mission06_Imerlishvili.Models
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Year is required.")]
+        
         public int Year { get; set; }
 
         [Required(ErrorMessage = "Director is required.")]
@@ -26,8 +27,11 @@ namespace Mission06_Imerlishvili.Models
 
         // "Lent" is not explicitly marked as required, making it optional
         public string Lent { get; set; }
+        [Required(ErrorMessage = "Rating is required.")]
+        public bool Plex { get; set; }
 
         [MaxLength(25, ErrorMessage = "Notes should be limited to 25 characters.")]
+ 
         public string Note { get; set; }
 
     }
