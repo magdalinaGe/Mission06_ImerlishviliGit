@@ -3,48 +3,45 @@
 *@
 @{
 }
-<script src="/js/site.js"></script>
+@model List<Movie>
 
+<table class="content-table">
+    <thead >
+        <tr>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Director</th>
+            <th>Rating</th>
+            <th>Edited</th>
+            <th class="w-15">Lent to</th> <!-- Adjust the width as needed -->
+            <th class="w-15">Copied to Plex</th> <!-- Adjust the width as needed -->
+            <th>Notes</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            
+                <tr>
+                    <td>@x.Title</td>
+                <td>@x.Year</td>
+                <td>@x.Director</td>
+                <td>@x.Rating</td>
+                <td>@x.Edited</td>
+                <td class="w-15">@x.LentTo</td> <!-- Adjust the width as needed -->
+                <td class="w-15">@x.CopiedToPlex</td> <!-- Adjust the width as needed -->
+                <td>@x.Notes</td>
 
-@model List<Application>
-
-
-    
-              
-
-               <table class="content-table">
-                   <thread>
-                       <td>ID</td>
-                       <td>Category</td>
-                       <td>Title</td>
-                       <td>Year</td>
-                       <td>Director</td>
-                       <td>Rating</td>
-                       <td>Edited</td>
-                       <td>Lent to</td>
-                       <td>CopiedToPlex</td>
-                       <td>Notes</td>
-
-                   </thread>
-                   @foreach(var x in Model)
-    {
-                   <tbody>
-                       <tr>
-                           <td>@x.ApplicationId</td>
-                           <td>@x.Category</td>
-                           <td>@x.Title</td>
-                           <td>@x.Year</td>
-                           <td>@x.Director</td>
-                           <td>@x.Rating</td>
-                           <td>@x.Edited</td>
-                           <td>@x.Lent</td>
-                           <td>@x.Plex</td>
-                           <td>@x.Note</td>
-                           <td></td>
-
-                           <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.ApplicationId">Edit</a></td>
-                           <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.ApplicationId">Delete</a></td>
-                       </tr>
-                   </tbody>
-    }
-               </table>
+                <td>
+                    <a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@x.MovieId">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@x.MovieId">Delete</a>
+                </td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
