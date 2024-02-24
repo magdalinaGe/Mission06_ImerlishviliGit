@@ -1,17 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission06_Imerlishvili.Models;
 using SQLitePCL;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Mission06_Imerlishvili.Controllers
 {
     public class HomeController : Controller
     {
-        private MovieApplicationContext _context;
-       public HomeController(MovieApplicationContext name)
-        { 
-            _context = name;
+
+        private MoviesContext _context;
+        public HomeController(MoviesContext temp) //Constructor
+        {
+            _context = temp;
         }
 
         public IActionResult Index()
@@ -21,61 +24,73 @@ namespace Mission06_Imerlishvili.Controllers
 
         public IActionResult Joel()
         {
-            return View() ;
+            return View();
         }
+
         [HttpGet]
         public IActionResult MovieApplication()
         {
+
+            ViewBag.Categories = _context.Categories
+                .ToList();
+
             return View();
         }
+
+        [HttpPost]
+        public IActionResult MovieApplication(Movie response)
+        {
+            _context.Movies.Add(response); //Add record to database
+            _context.SaveChanges();
+
+            return View("Confirmation", response);
+        }
+
         public IActionResult MovieList()
         {
-            var applications= _context.Applications.ToList();
-   
-            return View(applications);
+            var movies = _context.Movies
+                .OrderBy(x => x.Title).ToList();
+
+            return View(movies);
         }
-        [HttpPost]
-        public IActionResult MovieApplication(Application response)
-        {
-            response.Lent = response.Lent ?? ""; // Replace null with empty string
-            response.Note = response.Note ?? "";
-            _context.Applications.Add(response); // add record to database 
-            _context.SaveChanges(); //permanently add 
-            return View("Confirmation",response);
-        }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var recordToEdit = _context.Applications
-                .Single(x => x.ApplicationId == id);
+            var recordToEdit = _context.Movies
+                .Single(x => x.MovieId == id);
+
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryName)
+                .ToList();
+
             return View("MovieApplication", recordToEdit);
         }
+
         [HttpPost]
-        public IActionResult Edit(Application updatedInfo)
+        public IActionResult Edit(Movie updatedInfo)
         {
             _context.Update(updatedInfo);
-            updatedInfo.Lent = updatedInfo.Lent ?? ""; // Replace null with empty string
-            updatedInfo.Note = updatedInfo.Note ?? "";
-            _context.SaveChanges ();
+            _context.SaveChanges();
+
             return RedirectToAction("MovieList");
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var recordToDelete = _context.Applications
-                .Single(x => x.ApplicationId == id);
-            return View("Delete", recordToDelete);
+            var recordToDelete = _context.Movies
+                .Single(x => x.MovieId == id);
 
+            return View(recordToDelete);
         }
+
         [HttpPost]
-        public IActionResult Delete(Application deletedInfo)
+        public IActionResult Delete(Movie application)
         {
-         
-           // deletedInfo.Lent = deletedInfo.Lent ?? ""; // Replace null with empty string
-          //  deletedInfo.Note = deletedInfo.Note ?? "";
-            _context.Applications.Remove(deletedInfo);
+            _context.Movies.Remove(application);
             _context.SaveChanges();
+
             return RedirectToAction("MovieList");
         }
     }

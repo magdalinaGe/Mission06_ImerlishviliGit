@@ -3,13 +3,14 @@
 *@
 @{
 }
-@model Application
+@model Movie
 
-<h2>Confirt Deletion</h2>
-<h3>@Model.Title</h3>
+<h2>Confirm Deletion</h2>
+<h3> for Movie name: @Model.Title</h3>
+<form method="post">
 
-<form asp-controller="Home" asp-action="Delete" method="post">
-    <input type="hidden" asp-for="ApplicationId" />
+    <input type="hidden" asp-for="MovieId" />
+
     <button type="submit">Delete</button>
     <a class="btn btn-info" asp-controller="Home" asp-action="MovieList">Cancel</a>
 </form>
